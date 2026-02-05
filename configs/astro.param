@@ -1,0 +1,4 @@
+MAG_AUTO                 #Kron-like elliptical aperture magnitude                   [mag]
+X_IMAGE                  #Object position along x                                   [pixel]
+Y_IMAGE                  #Object position along y                                   [pixel]
+
