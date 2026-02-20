@@ -24,13 +24,13 @@ mkdir $dir_data
 fi
 
 printf '\n\n\n\n\n1.createMasters.py\n'
-python createCF.py $dir_data $dir_night $target
+python master_calibration_frames.py $dir_data $dir_night $target
 
 printf '\n\n\n\n\n2.procImages.py\n'
-python procImages.py $dir_night $dir_data $dir_config $target 
+python reduction.py $dir_night $dir_data $dir_config $target 
 
 printf '\n\n\n\n\n3.createLC.py\n'
-python -W"ignore" createRLCNP.py $dir_data $target $catalog_path
+python -W"ignore" raw_light_curves_night_part.py $dir_data $target $catalog_path
 
 ############################################################################
 rm -r $dir_data/Calibrated
