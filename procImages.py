@@ -19,7 +19,7 @@ import subprocess
 from astropy.io import fits
 from astropy.time import Time
 
-from _funcs import trimFrames, saveFrame 
+from _funcs import trim_frames, save_frame 
 
 from astropy.stats import SigmaClip
 from photutils.background import Background2D, MedianBackground
@@ -77,7 +77,7 @@ def process(MJD, file, k, Master, dir_cal, dir_wcs, Params_dict, Params_list,
     with fits.open(file_open) as f:
         hdr = f[0].header
         frame = f[0].data
-    frame = trimFrames(frame)
+    frame = trim_frames(frame)
     MJD[name] = Time(hdr['UNIXTIME'], format='unix').mjd + hdr['EXPTIME'] / 2 / 86400
 
     #######################################
@@ -94,8 +94,8 @@ def process(MJD, file, k, Master, dir_cal, dir_wcs, Params_dict, Params_list,
         n_y, n_x = parts[part_i]
         X_i, Y_i = X_grid[n_x], Y_grid[n_y]
 
-        image_i = trimFrames(image_cb, Y_i, X_i)
-        saveFrame(image_i, name=name_i, dir_save=dir_cal, hdr=hdr)
+        image_i = trim_frames(image_cb, Y_i, X_i)
+        save_frame(image_i, name=name_i, dir_save=dir_cal, hdr=hdr) 
     #######################################
         if astrometry:
             image_astrom = dir_cal + name_i + '.fits'

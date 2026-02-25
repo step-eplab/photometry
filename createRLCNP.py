@@ -19,10 +19,6 @@ if len(sys.argv)>1:
     target = sys.argv[2]
     catalog_path = sys.argv[3]
 
-else:
-    dir_data ='/Data/oleg/F1_EGGR-381/2020/20.09.20/' # '/home/fedora/astronomy/STEP/main/data/F1/images/20.09.20/'
-    target = 'EGGR381'
-    catalog_path = '/home/oleg/oleg/STEP/catalogs/F1_2405.list'   #'/home/fedora/astronomy/STEP/F1_24.list'
 
 #############################
 date = dir_data.replace('.','')[-7:-1]      
@@ -82,12 +78,3 @@ for pi in range(9):
     name_df = dir_lc + 'LC_' + date + '_' + part_i + '.csv'
     print('SAVE DataFrame ' +  name_df)
     DF.to_csv(name_df, index_label='g_inx')
-
-
-
-
-
-
-
-
-

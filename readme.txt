@@ -26,3 +26,5 @@ _startProc.sh
 	ASSOC_NAME	должен быть указан catalog_path для выбранного поля
 
 
+
+

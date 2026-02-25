@@ -17,7 +17,6 @@ else
     dir_res='/Data/oleg/F3_GD_356/'
     catalog_path='/home/oleg/oleg/STEP/catalogs/GD_356.list'
     target='GD356'
-
 fi
 
 ###!!!  CHECK ASSOC_NAME in dir_config photo.sex
