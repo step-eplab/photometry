@@ -19,11 +19,52 @@ import subprocess
 from astropy.io import fits
 from astropy.time import Time
 
-from utils import trim_frames, save_frame 
-from calibration import calibrate
-from astrometry import run_astrometry
+from _funcs import trimFrames, saveFrame 
+
+from astropy.stats import SigmaClip
+from photutils.background import Background2D, MedianBackground
 
 #######################################
+def runReduce(frame, k, Master, dir_cal):
+    if k==1:
+        M_dark = Master[0]
+        image_c = frame - M_dark
+    if k==3:
+        M_dark, M_flat = Master
+        image_c = (frame - M_dark) / M_flat
+    image_c = np.float32(image_c)
+#    return image_c
+
+    bkg_estimator = MedianBackground()
+    bkg = Background2D(image_c, (28, 28), filter_size=(7, 7),
+                           sigma_clip=SigmaClip(sigma=5), bkg_estimator=bkg_estimator)
+
+    image_cb = image_c - bkg.background
+    '''
+    sat_lvl = 50e3
+    sat = image_cb>sat_lvl
+    image_cb[sat] = np.nan
+    '''
+    image_cb = np.float32(image_cb)
+    return image_cb
+
+def runAstrometry(hdr, file, Params_dict, Params_list):
+    name = file[file.find(target):-5]
+    ra0 = hdr['TAGRA']
+    dec0 = hdr['TAGDEC']
+    Params_dict['-k'] = dir_xym + name + '.axy'
+    Params_dict['-3'] =  str(ra0) # '3.05730540959', # 
+    Params_dict['-4'] =  str(dec0) # '50.4192709867', #
+    
+    SF_params = ''
+    for k in Params_dict.keys():
+        SF_params += k + ' ' + Params_dict[k] + ' '
+        
+    SF_params += ' '.join(Params_list) + ' '
+    SF_comand = 'solve-field ' + SF_params + file 
+    
+    subprocess.run(SF_comand, shell=True) 
+
 
 def process(MJD, file, k, Master, dir_cal, dir_wcs, Params_dict, Params_list,
                             reduc=1, astrometry=1, photometry=1, remove_images=1):
@@ -36,13 +77,14 @@ def process(MJD, file, k, Master, dir_cal, dir_wcs, Params_dict, Params_list,
     with fits.open(file_open) as f:
         hdr = f[0].header
         frame = f[0].data
-    frame = trim_frames(frame)
+    frame = trimFrames(frame)
     MJD[name] = Time(hdr['UNIXTIME'], format='unix').mjd + hdr['EXPTIME'] / 2 / 86400
 
     #######################################
     if reduc:
-        image_cb = calibrate(frame, k, Master, dir_cal)
+        image_cb = runReduce(frame, k, Master, dir_cal)
     
+
     g = [0, 1500, 1000, 3096, 2596, 4096]
     parts = [[0, 0], [1, 0], [2, 0], [0, 1], [1, 1], [2, 1], [0, 2], [1, 2], [2, 2]]
     Y_grid = [g[:2], g[2:4], g[4:]]
@@ -52,13 +94,12 @@ def process(MJD, file, k, Master, dir_cal, dir_wcs, Params_dict, Params_list,
         n_y, n_x = parts[part_i]
         X_i, Y_i = X_grid[n_x], Y_grid[n_y]
 
-        image_i = trim_frames(image_cb, Y_i, X_i)
-        save_frame(image_i, name=name_i, dir_save=dir_cal, hdr=hdr)
+        image_i = trimFrames(image_cb, Y_i, X_i)
+        saveFrame(image_i, name=name_i, dir_save=dir_cal, hdr=hdr)
     #######################################
         if astrometry:
             image_astrom = dir_cal + name_i + '.fits'
-            run_astrometry(hdr, image_astrom, Params_dict, Params_list, 
-                           target, dir_xym)
+            runAstrometry(hdr, image_astrom, Params_dict, Params_list)
     #######################################
         if photometry:
             with open(se_config_2, 'r') as f:
