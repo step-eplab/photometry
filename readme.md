@@ -1,4 +1,4 @@
-### Example of pathes.json:
+### Example of paths.json:
 
 {\
 "dir_raw": "/home/proj/data/",\
