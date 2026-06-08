@@ -12,7 +12,7 @@ from procRI import run as run_procRI
 from createRLC import run as run_createRLC
 
 config_name_main = 'configs/main.json'   
-config_name_pathes = '../pathes.json'   
+config_name_paths = '../paths.json'   
 
 with open(config_name_main, 'r') as file:
     configs_main = json.load(file)
@@ -20,12 +20,12 @@ target = configs_main['target']
 img_size_X = configs_main['img_size_X']
 img_size_Y = configs_main['img_size_Y']
 
-with open(config_name_pathes, 'r') as file:
-    configs_main = json.load(file)
+with open(config_name_paths, 'r') as file:
+    configs_paths = json.load(file)
 
-dir_raw = configs_main['dir_raw']
-dir_res = configs_main['dir_res']
-catalog_path = configs_main['catalog_path']
+dir_raw = configs_paths['dir_raw']
+dir_res = configs_paths['dir_res']
+catalog_path = configs_paths['catalog_path']
 
 config_name_RI = 'configs/procRI.json'  
 config_name_RLC = 'configs/createRLC.json'
