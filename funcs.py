@@ -13,7 +13,7 @@ import multiprocessing
 from astropy.io import fits
 from astropy.stats import SigmaClip
 
-def read_fits(Stack, file):
+def read_fits(file, Stack=[]):
     if file[-2:]=='xz':
         file_open = lzma.open(file)
         file = file[:-3]

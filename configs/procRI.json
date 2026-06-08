@@ -1,0 +1,9 @@
+{
+"dir_config": "/home/fedora/astronomy/STEP/main/scripts/photometry/configs/",
+"multiproc_mode": true,
+
+"ra": 285.117,
+"dec": 70.583,
+"rad": 0.5
+}
+
