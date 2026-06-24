@@ -27,7 +27,6 @@ target = configs_main['target']
 img_size_X = configs_main['img_size_X']
 img_size_Y = configs_main['img_size_Y']
 
-config_name_prep = dir_configs + 'create_cat.json'  
 config_name_RI = dir_configs + 'procRI.json'  
 config_name_RLC = dir_configs + 'createRLC.json'
 config_name_CF = dir_configs + 'createCF.json'
@@ -35,7 +34,7 @@ config_name_CF = dir_configs + 'createCF.json'
 dates = os.listdir(dir_raw)
 
 
-for date in dates[:1]:    
+for date in dates[1:2]:    
     #config_name_CF = f'configs/createCF_{date}.json'
     
     dir_data = dir_raw + date + '/'
@@ -44,9 +43,9 @@ for date in dates[:1]:
     run_createCF(config_name_CF, target, dir_data, dir_save, 
                  img_size_X, img_size_Y)
 
-    run_procRI(config_name_RI, config_name_prep, target, catalog_path, 
+    run_procRI(config_name_RI, target, catalog_path, 
                dir_data, dir_save, dir_configs, 
-               img_size_X, img_size_Y, N_images=0)
+               img_size_X, img_size_Y, N_images=10)
     run_createRLC(config_name_RLC, date, dir_save)
 
 

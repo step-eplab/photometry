@@ -1,10 +1,8 @@
 {
 "multiproc_mode": true,
-
-"ra": 259.212,
-"dec": 67.914,
+"ra": 250.23722256910,
+"dec": 53.68507500786,
 "rad": 0.5,
-
-"PHOT_APERTURES": "4,6,8,10"
+"PHOT_APERTURES": "4,8,9,10"
 }
 

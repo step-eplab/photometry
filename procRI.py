@@ -181,7 +181,7 @@ def process(T, file, img_size_X, img_size_Y, k, Master, dir_cal, dir_wcs,
 
 
 ###############################################################################
-def run(config_name, config_name2, target, catalog_path, dir_data, dir_save, dir_configs,
+def run(config_name, target, catalog_path, dir_data, dir_save, dir_configs,
         img_size_X, img_size_Y, N_images=0):    
     
     with open(config_name, 'r') as file:
@@ -189,11 +189,9 @@ def run(config_name, config_name2, target, catalog_path, dir_data, dir_save, dir
     multiproc_mode = configs['multiproc_mode']
     rad = configs['rad']  
     aps = configs['PHOT_APERTURES']
-    
-    with open(config_name2, 'r') as file:
-        configs2 = json.load(file)
-    ra = configs2['ra']
-    dec = configs2['dec']
+
+    ra = configs['ra']
+    dec = configs['dec']
     ###############################################################################
     se_config_1 = dir_configs + 'params/astrometry.in'
     se_config_2 =  dir_configs + 'params/photometry.in'
