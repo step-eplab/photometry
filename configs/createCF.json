@@ -1,7 +1,7 @@
 {
 "min_targets": 30,
-"N_dark": 300,
-"N_flat": 300,
+"N_dark": 100,
+"N_flat": 100,
 "multiproc": false,
 
 "bias_template": "bias",

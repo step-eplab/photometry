@@ -20,12 +20,14 @@ def create_master(files, multiproc, mode, img_size_X, img_size_Y,
     Stack = collect_frames(files, multiproc)
     Stack = trim_frames(Stack, Y=img_size_Y, X=img_size_X)
     Master = combine_frames(Stack, mode, substract_frame)
+
     if save_path:
         fits.writeto(save_path, Master)  
     return Master
 
 ###############################################################################
 def run(config_name, target, dir_data, dir_save, img_size_X, img_size_Y):
+    # config_name = config_name_CF
     with open(config_name, 'r') as file:
         configs = json.load(file)
     min_targets = configs['min_targets']
@@ -62,13 +64,13 @@ def run(config_name, target, dir_data, dir_save, img_size_X, img_size_Y):
             MDark_here = os.path.isfile(MDark_path)
             M_dark = 0
             if not MDark_here:
-                dark_files = glob.glob(dir_data + f'**/*{dark_tmpl}*.fit', recursive=True)[:N_dark]
+                dark_files = glob.glob(dir_data + f'**/*{dark_tmpl}*.fit*', recursive=True)[:N_dark]
                 if len(dark_files)>0:
                     M_dark = create_master(dark_files, multiproc, 'Dark',
                                            img_size_X, img_size_Y, 
                                            save_path=MDark_path)
                 else:
-                    print('There are no dark_frames')
+                    print(f'There are no dark_frames: {dir_data}')
         
             else:
                 print('M_DARK exists')
@@ -76,7 +78,7 @@ def run(config_name, target, dir_data, dir_save, img_size_X, img_size_Y):
         MFlat_path = dir_master + 'M_flat.fits'
         MFlat_here = os.path.isfile(MFlat_path)
         if not MFlat_here:
-            flat_files = glob.glob(dir_data + f'**/*{flat_template}*.fit', recursive=True)[:N_flat]
+            flat_files = glob.glob(dir_data + f'**/*{flat_template}*.fit*', recursive=True)[:N_flat]
             if len(flat_files)>0:
                 if MDark_here & (type(M_dark)==int):
                     M_dark = read_fits(file=MDark_path, Stack=[])[0]
@@ -84,7 +86,7 @@ def run(config_name, target, dir_data, dir_save, img_size_X, img_size_Y):
                                        img_size_X, img_size_Y, M_dark,
                                        save_path=MFlat_path)
             else:
-                print('There are no flat_frames')
+                print(f'There are no flat_frames: {dir_data}')
         else:
             print('M_FLAT exists')
 

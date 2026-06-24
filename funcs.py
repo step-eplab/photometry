@@ -31,7 +31,7 @@ def collect_frames(files, multiproc):
         Stack = manager.list()
         processes = []
         for file in files:
-            p = multiprocessing.Process(target=read_fits, args=(Stack, file))
+            p = multiprocessing.Process(target=read_fits, args=(file, Stack))
             processes.append(p)
             p.start()
         for p in processes:
@@ -77,7 +77,7 @@ def combine_frames(Stack, mode, substract_frame=0):
         Master = np.median(Stack, 0) - substract_frame
         norm = np.quantile(Master.flatten(), 0.95)
         Master = Master / norm
-    Master = np.float32(Master)
+   # Master = np.float32(Master)
     return Master
 
 def save_frame(frame, name, dir_save, hdr=0, overwrite=True):
