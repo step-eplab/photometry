@@ -7,13 +7,18 @@ Created on Sat Jun  6 14:07:59 2026
 """
 
 import os
+import sys
 import json
 from createCF import run as run_createCF
 from procRI import run as run_procRI
 from createRLC import run as run_createRLC
 
 def main():
-    config_name_paths = '../paths_F3.json'
+    if len(sys.argv)>1:
+        config_name_paths = sys.argv[1]
+    else:
+        config_name_paths = '../pathdsfs_F3.json'
+    
     with open(config_name_paths, 'r') as file:
         configs_paths = json.load(file)
     dir_raw = configs_paths['dir_raw_images']
@@ -40,12 +45,12 @@ def main():
     
         run_createCF(config_name_CF, target, dir_data, dir_save, 
                      img_size_X, img_size_Y)
-
+        '''
         run_procRI(config_name_RI, target, catalog_path, 
                    dir_data, dir_save, dir_configs, 
                    img_size_X, img_size_Y, N_images=10)
         run_createRLC(config_name_RLC, date, dir_save)
-
+        '''
 
     
 if __name__ == "__main__":
