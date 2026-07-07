@@ -4,10 +4,14 @@ MAG_APER[1]                 #Fixed aperture magnitude vector                    
 MAG_APER[2]                 #Fixed aperture magnitude vector                           [mag]
 MAG_APER[3]                 #Fixed aperture magnitude vector                           [mag]
 MAG_APER[4]                 #Fixed aperture magnitude vector                           [mag]
-MAGERR_APER[1]              #RMS error vector for fixed aperture mag.                  [mag]
-MAGERR_APER[2]              #RMS error vector for fixed aperture mag.                  [mag]
-MAGERR_APER[3]              #RMS error vector for fixed aperture mag.                  [mag]
-MAGERR_APER[4]              #RMS error vector for fixed aperture mag.                  [mag]
+MAG_APER[5]                 #Fixed aperture magnitude vector                           [mag]
+MAG_APER[6]                 #Fixed aperture magnitude vector                           [mag]
+MAG_APER[7]                 #Fixed aperture magnitude vector                           [mag]
+
+#MAGERR_APER[1]              #RMS error vector for fixed aperture mag.                  [mag]
+#MAGERR_APER[2]              #RMS error vector for fixed aperture mag.                  [mag]
+#MAGERR_APER[3]              #RMS error vector for fixed aperture mag.                  [mag]
+#MAGERR_APER[4]              #RMS error vector for fixed aperture mag.                  [mag]
 
 #X_IMAGE                  #Object position along x                                   [pixel]
 #Y_IMAGE                  #Object position along y                                   [pixel]

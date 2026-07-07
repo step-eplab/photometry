@@ -70,6 +70,7 @@ def runAstrometry(hdr, file, Params_dict, Params_list, target, se_config_1,
     Params_dict['-5'] =  str(rad)
     Params_dict['-k'] = dir_xym + name + '.axy'
     Params_dict['--source-extractor-config'] = se_config_tmp
+    Params_dict['--source-extractor-config'] = se_config_tmp
     
     SF_params = ''
     for k in Params_dict.keys():
@@ -192,6 +193,7 @@ def run(config_name, target, catalog_path, dir_data, dir_save, dir_configs,
 
     ra = configs['ra']
     dec = configs['dec']
+    se_path = configs['se_path']
     ###############################################################################
     se_config_1 = dir_configs + 'params/astrometry.in'
     se_config_2 =  dir_configs + 'params/photometry.in'
@@ -229,12 +231,12 @@ def run(config_name, target, catalog_path, dir_data, dir_save, dir_configs,
     t0 = time()
     n = os.cpu_count()
     N = len(image_files)//n + 1
-    print(s + 'subsctract')
+    print(s + 'subtract')
     
     Params_dict = {
         '-D': dir_wcs,
-        '--source-extractor-path': '/usr/bin/sex',
-        #'--config': dir_configs + 'astrometry.cfg',
+        '--source-extractor-path': se_path,
+        '--config': dir_configs + 'params/astrometry.cfg',
         '-u': 'app',
         '--x-column': 'X_IMAGE',
         '--y-column': 'Y_IMAGE',

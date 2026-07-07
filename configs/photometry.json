@@ -1,5 +1,10 @@
 {
 "target": "GD356",
 "img_size_X": [36, 4132],
-"img_size_Y": [21, 4117]
+"img_size_Y": [21, 4117],
+"min_targets": 30,
+"year": 24,
+"month": [11, 12],
+"days": [[10, 30], [1, 10]],
+"N_images": 0
 }

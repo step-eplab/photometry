@@ -1,5 +1,4 @@
 {
-"min_targets": 30,
 "N_dark": 10,
 "N_flat": 10,
 "multiproc": true,

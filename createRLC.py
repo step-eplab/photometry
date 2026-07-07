@@ -17,8 +17,8 @@ import astropy.io.ascii as asc
 def run(config_name, date, dir_save):    
     with open(config_name, 'r') as file:
         configs = json.load(file)
-    columns = configs['columns']
-    
+    N_col = configs['PHOT_APERTURES'].count(',') + 1
+    columns = np.concatenate(([''], '_' + np.arange(1, N_col).astype(str)))
     #############################
     date = date.replace('.','')
     

@@ -3,6 +3,7 @@
 "ra": 250.23722256910,
 "dec": 53.68507500786,
 "rad": 0.5,
+"se_path": "/usr/bin/sex",
 "PHOT_APERTURES": "4,8,9,10"
 }
 
