@@ -3,7 +3,7 @@
 {\
 "dir_raw_images": "/STEP/main/data/F3/images/",\
 "dir_res": "/STEP/main/data/F3/result/",\
-"dir_LC": "/STEP/main/data/F4/LC/",\
+"dir_LC": "/STEP/main/data/F3/LC/",\
 "dir_configs": "/STEP/main/configs/F3/",\
 "dir_cat": "/STEP/main/catalogs/F3/",\
 "cat_name": "F3.list"
