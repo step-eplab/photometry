@@ -15,7 +15,7 @@ import subprocess
 
 from createCF import run as run_createCF
 from procRI import run as run_procRI
-from createRLC import run as run_createRLC
+from createRLCN import run as run_createRLC
 
 def get_dates(dir_raw, configs_main):
     year = configs_main['year']
