@@ -25,6 +25,8 @@ def get_dates(dir_raw, configs_main):
     dates_here = np.array(os.listdir(dir_raw))
     dates = []
     for month, days_m in zip(months, days):
+        if month<10:
+            month = '0' + str(month)
         days_grid = np.arange(days_m[0], days_m[1])
         for day in days_grid:
             if day<10:
@@ -82,7 +84,6 @@ def main():
         else:
             print(f'There are no {target} images')
             print(f'path: {dir_data}')
-
 
 if __name__ == "__main__":
     main()
