@@ -27,7 +27,10 @@ def get_dates(dir_raw, configs_main):
     for month, days_m in zip(months, days):
         if month<10:
             month = '0' + str(month)
-        days_grid = np.arange(days_m[0], days_m[1])
+        if len(days_m)>1:
+            days_grid = np.arange(days_m[0], days_m[1])
+        else:
+            days_grid = days_m
         for day in days_grid:
             if day<10:
                 day = '0' + str(day)
@@ -40,7 +43,7 @@ def main():
     if len(sys.argv)>1:
         config_name_paths = sys.argv[1]
     else:
-        config_name_paths = '../paths_F4.json'
+        config_name_paths = '../paths_F5.json'
     
     with open(config_name_paths, 'r') as file:
         configs_paths = json.load(file)
@@ -76,10 +79,10 @@ def main():
             run_procRI(config_name_RI, target, catalog_path, 
                        dir_data, dir_save, dir_configs,
                        img_size_X, img_size_Y, N_images=N_images)
-            run_createRLC(config_name_RI, date, dir_save)
+            #run_createRLC(config_name_RI, date, dir_save)
             
-            for name in ['Calibrated', 'Cat', 'WCS', 'XYMag', 'time.npy']:
-                subprocess.run(f'rm -r {dir_res}{date}/{name}', shell=True)
+         #   for name in ['Calibrated', 'Cat', 'WCS', 'XYMag', 'time.npy']:
+          #      subprocess.run(f'rm -r {dir_res}{date}/{name}', shell=True)
             
         else:
             print(f'There are no {target} images')

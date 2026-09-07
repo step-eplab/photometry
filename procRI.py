@@ -85,11 +85,15 @@ def runAstrometry(hdr, file, Params_dict, Params_list, target, se_config_1,
     
     
 def runPhotometry(image_photom, se_config_2, name, catalog_path, 
-                  dir_config, dir_cat, aps):
+                  dir_config, dir_cat, aps, name_i=None):
+    if name_i:
+        name_cat = name_i
+    else:
+        name_cat = name
     # read
     with open(se_config_2, 'r') as f:
-      filedata = f.read()      
-    filedata = filedata.replace('test.cat', dir_cat + name + '.cat')
+      filedata = f.read()
+    filedata = filedata.replace('test.cat', dir_cat + name_cat + '.cat')
     filedata = filedata.replace('photometry.out', dir_config + 'params/photometry.out')
     filedata = filedata.replace('catalog.list', catalog_path)
     filedata = filedata.replace('4,6,8,10', aps)
@@ -104,8 +108,8 @@ def runPhotometry(image_photom, se_config_2, name, catalog_path,
     
     os.remove(se_config_tmp)
 
-
-
+# file = image_files[0]
+# dir_config = dir_configs
 def process(T, file, img_size_X, img_size_Y, k, Master, dir_cal, dir_wcs, 
                             Params_dict, Params_list,
                             target, se_config_1, se_config_2, catalog_path,  
@@ -130,8 +134,8 @@ def process(T, file, img_size_X, img_size_Y, k, Master, dir_cal, dir_wcs,
     if reduc:
         image_cb = runReduce(frame, k, Master, dir_cal)
         save_frame(image_cb, name=name, dir_save=dir_cal, hdr=hdr)
-    '''
-    g = [0, 1500, 1000, 3096, 2596, 4096]
+
+    g = [0, 1700, 1000, 3096, 2396, 4096]
     parts = [[0, 0], [1, 0], [2, 0], [0, 1], [1, 1], [2, 1], [0, 2], [1, 2], [2, 2]]
     Y_grid = [g[:2], g[2:4], g[4:]]
     X_grid = Y_grid
@@ -139,7 +143,7 @@ def process(T, file, img_size_X, img_size_Y, k, Master, dir_cal, dir_wcs,
         name_i = name + '_' + str(part_i)
         n_y, n_x = parts[part_i]
         X_i, Y_i = X_grid[n_x], Y_grid[n_y]
-    
+        #print(part_i, X_i, Y_i, (X_i[1]-X_i[0]), (Y_i[1]-Y_i[0]))
         image_i =  trim_frames(image_cb, Y=Y_i, X=X_i)
         save_frame(image_i, name=name_i, dir_save=dir_cal, hdr=hdr)
     #######################################
@@ -151,15 +155,15 @@ def process(T, file, img_size_X, img_size_Y, k, Master, dir_cal, dir_wcs,
     #######################################
         if photometry:
             image_photom = dir_wcs + name_i + '.new'
+            print(image_photom)
             runPhotometry(image_photom, se_config_2, name, catalog_path, 
-                          dir_config, dir_cat, aps)
+                          dir_config, dir_cat, aps, name_i)
         if remove_images:
             os.remove(image_astrom)
             os.remove(image_photom)
-
     return T
 
-    '''
+'''
     #######################################
     if astrometry:
         image_astrom = dir_cal + name + '.fits'        
@@ -175,12 +179,12 @@ def process(T, file, img_size_X, img_size_Y, k, Master, dir_cal, dir_wcs,
         os.remove(image_astrom)
         os.remove(image_photom)
     return T
+'''
 
 
 
 
-
-
+#  config_name = config_name_RI
 ###############################################################################
 def run(config_name, target, catalog_path, dir_data, dir_save, dir_configs,
         img_size_X, img_size_Y, N_images=0):    
@@ -247,7 +251,7 @@ def run(config_name, target, catalog_path, dir_data, dir_save, dir_configs,
         '-M': 'none',
         '-S': 'none',
         '-U': 'none',
-        '-t': '4'
+        '-t': '2'
         }
     Params_list = ['--use-source-extractor', '-g', '-O',
                    '--temp-axy', '-r', '-p', '--timestamp', '--no-remove-lines',
