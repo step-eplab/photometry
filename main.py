@@ -60,13 +60,16 @@ def main():
     img_size_Y = configs_main['img_size_Y']
     min_targets = configs_main['min_targets']
     N_images = configs_main['N_images']
-    config_name_RI = dir_configs + 'procRI.json'  
+    config_name_RI = dir_configs + 'procRI.jsonn'  
     config_name_CF = dir_configs + 'createCF.json'
     #config_name_RLC = dir_configs + 'createRLC.json'
     
     dates = get_dates(dir_raw, configs_main)
 
+    print('Start Main')
+    print(f'    target={target}\n    N_images={N_images}')
     for date in dates:
+        print('\n\n\n', date)
         dir_data = dir_raw + date + '/'
         image_files = glob.glob(dir_data + '**/*' + target + '*.fit*', recursive=True)
    
@@ -75,19 +78,19 @@ def main():
         
             run_createCF(config_name_CF, dir_data, dir_save, 
                          img_size_X, img_size_Y)
-    
+            
+            '''
             run_procRI(config_name_RI, target, catalog_path, 
                        dir_data, dir_save, dir_configs,
                        img_size_X, img_size_Y, N_images=N_images)
-            #run_createRLC(config_name_RI, date, dir_save)
+            run_createRLC(config_name_RI, date, dir_save)
             
-         #   for name in ['Calibrated', 'Cat', 'WCS', 'XYMag', 'time.npy']:
-          #      subprocess.run(f'rm -r {dir_res}{date}/{name}', shell=True)
-            
+            for name in ['Calibrated', 'Cat', 'WCS', 'XYMag', 'time.npy']:
+                subprocess.run(f'rm -r {dir_res}{date}/{name}', shell=True)
+            '''
         else:
             print(f'There are no {target} images')
             print(f'path: {dir_data}')
 
 if __name__ == "__main__":
     main()
-

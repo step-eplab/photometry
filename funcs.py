@@ -11,7 +11,6 @@ import numpy as np
 import multiprocessing
 
 from astropy.io import fits
-from astropy.stats import SigmaClip
 
 def read_fits(file, Stack=[]):
     if file[-2:]=='xz':
@@ -26,6 +25,7 @@ def read_fits(file, Stack=[]):
     return Stack
     
 def collect_frames(files, multiproc):
+    print(f'\n    Сollect frames: N={len(files)}, multiproc={multiproc}')
     if multiproc:
         manager = multiprocessing.Manager()
         Stack = manager.list()
@@ -51,7 +51,8 @@ def collect_frames(files, multiproc):
             Stack.append(frame)
     return Stack
 
-def trim_frames(frames, X, Y):    
+def trim_frames(frames, X, Y):
+    print(f'\n    Trim frames: {X, Y}')
     if type(frames)==list:
         for i in range(len(frames)):
             frames[i] = frames[i][Y[0]:Y[1], X[0]:X[1]]
@@ -59,25 +60,22 @@ def trim_frames(frames, X, Y):
         frames = frames[Y[0]:Y[1], X[0]:X[1]]
     return frames
 
+
+
 def combine_frames(Stack, mode, substract_frame=0):
-    print('combine frames')
-    M = []
-    if mode=='Dark':
-        for i, dark in enumerate(Stack):
-            print(i, end=', ')
-            med = np.median(dark)
-            sigma_mask = SigmaClip()(dark).mask
-            dark[sigma_mask] = med
-            M.append(dark)
-        Master = np.mean(M, 0)
-    elif mode=='Flat':
-        for i, flat in enumerate(Stack):
-            print(i, end=', ')
-            M.append(flat) 
-        Master = np.median(Stack, 0) - substract_frame
-        norm = np.quantile(Master.flatten(), 0.95)
-        Master = Master / norm
-   # Master = np.float32(Master)
+    print('\n    Сombine frames')
+    Stack = np.asarray(Stack, dtype=np.float32)
+    if mode == 'Dark':
+        Median = np.median(Stack, axis=0)
+        dif = np.abs(Stack - Median).mean(axis=(1, 2))
+        good = (dif/np.median(dif)) < 2
+        Stack = Stack[good]
+        print(f'    {sum(good)}/{len(good)} are used')
+    if mode == 'Flat':
+        Stack -= substract_frame
+        lvl_norm = np.quantile(Stack, 0.95, axis=(1, 2), keepdims=True)
+        Stack /= lvl_norm
+    Master = np.median(Stack, axis=0)
     return Master
 
 def save_frame(frame, name, dir_save, hdr=0, overwrite=True):
@@ -94,4 +92,5 @@ def sigma_clip(img, n=3):
     u = abs(img - med) > n * std
     img[u] = med
     return img
+
 

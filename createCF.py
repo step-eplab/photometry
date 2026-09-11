@@ -20,6 +20,7 @@ def create_master(files, multiproc, mode, img_size_X, img_size_Y,
     Master = combine_frames(Stack, mode, substract_frame)
 
     if save_path:
+        print(f'\n    Save Master to {save_path}')
         fits.writeto(save_path, Master)  
     return Master
 
@@ -53,10 +54,9 @@ def run(config_name, dir_data, dir_save, img_size_X, img_size_Y):
     dir_master = dir_save + 'Master/'
     os.makedirs(dir_master, exist_ok=True)
 
- 
-    print('\ncreate M_dark')
+    # dark_tmpl = dark_tmpls[0]
+    print('\nCreate Master Dark')
     for dark_tmpl in dark_tmpls:
-        print('\n', dark_tmpl)
         MDark_path = dir_master + f'M_{dark_tmpl}.fits'
         MDark_here = os.path.isfile(MDark_path)
         M_dark = 0
@@ -70,8 +70,8 @@ def run(config_name, dir_data, dir_save, img_size_X, img_size_Y):
                 print(f'There are no dark_frames: {dir_data}')
     
         else:
-            print('M_DARK exists')
-    print('\ncreate M_flat')
+            print('    M_dark exists')
+    print('\nCreate Master Flat')
     MFlat_path = dir_master + 'M_flat.fits'
     MFlat_here = os.path.isfile(MFlat_path)
     if not MFlat_here:
@@ -85,7 +85,7 @@ def run(config_name, dir_data, dir_save, img_size_X, img_size_Y):
         else:
             print(f'There are no flat_frames: {dir_data}')
     else:
-        print('M_FLAT exists')
+        print('    M_flat exists')
 
     ### scaling
     if scale_mode:
