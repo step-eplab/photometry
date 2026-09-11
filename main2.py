@@ -29,7 +29,7 @@ def get_dates(dir_raw, configs_main):
         if month<10:
             month = '0' + str(month)
         if len(days_m)>1:
-            days_grid = np.arange(days_m[0], days_m[1])
+            days_grid = np.arange(days_m[0], days_m[1]+1)
         else:
             days_grid = days_m
         for day in days_grid:
