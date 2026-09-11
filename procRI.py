@@ -248,7 +248,7 @@ def run(config_name, target, catalog_path, dir_data, dir_save, dir_configs,
         '-M': 'none',
         '-S': 'none',
         '-U': 'none',
-        '-t': '2'
+        '-t': '4'
         }
     Params_list = ['--use-source-extractor', '-g', '-O',
                    '--temp-axy', '-r', '-p', '--timestamp', '--no-remove-lines',
@@ -292,7 +292,7 @@ def run(config_name, target, catalog_path, dir_data, dir_save, dir_configs,
                                 target, se_config_1, se_config_2, catalog_path,
                                 dir_configs, dir_cat, dir_xym, aps,
                                 ra, dec, rad,
-                                reduc=1, astrometry=1, photometry=1, remove_images=1)
+                                reduc=1, astrometry=1, photometry=1, remove_images=0)
                 
                 K = list(T.keys())
                 V = list(T.values())  

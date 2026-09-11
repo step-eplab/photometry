@@ -14,6 +14,9 @@ import pandas as pd
 
 import astropy.io.ascii as asc
 
+# config_name = config_name_RI
+# date = 'xxxx'
+# dir_save = '/home/fedora/astronomy/STEP/main/data/field5_11September/'
 def run(config_name, date, dir_save):    
     with open(config_name, 'r') as file:
         configs = json.load(file)
@@ -73,8 +76,6 @@ def run(config_name, date, dir_save):
         name_df = f'{dir_lc}LC_{date}{col}.csv'
         print(f'SAVE DataFrame {name_df}')
         DFs[i].to_csv(name_df, index_label='g_inx')
-
-
 
 
 
