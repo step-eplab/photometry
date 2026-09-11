@@ -43,7 +43,7 @@ def main():
     if len(sys.argv)>1:
         config_name_paths = sys.argv[1]
     else:
-        config_name_paths = '../paths_F5.json'
+        config_name_paths = '../paths_F4.json'
     
     with open(config_name_paths, 'r') as file:
         configs_paths = json.load(file)
@@ -60,7 +60,7 @@ def main():
     img_size_Y = configs_main['img_size_Y']
     min_targets = configs_main['min_targets']
     N_images = configs_main['N_images']
-    config_name_RI = dir_configs + 'procRI.jsonn'  
+    config_name_RI = dir_configs + 'procRI.json'  
     config_name_CF = dir_configs + 'createCF.json'
     #config_name_RLC = dir_configs + 'createRLC.json'
     
@@ -69,7 +69,7 @@ def main():
     print('Start Main')
     print(f'    target={target}\n    N_images={N_images}')
     for date in dates:
-        print('\n\n\n', date)
+        print('\n\n\n------------------------------', date)
         dir_data = dir_raw + date + '/'
         image_files = glob.glob(dir_data + '**/*' + target + '*.fit*', recursive=True)
    
@@ -78,11 +78,10 @@ def main():
         
             run_createCF(config_name_CF, dir_data, dir_save, 
                          img_size_X, img_size_Y)
-            
-            '''
             run_procRI(config_name_RI, target, catalog_path, 
                        dir_data, dir_save, dir_configs,
                        img_size_X, img_size_Y, N_images=N_images)
+            '''
             run_createRLC(config_name_RI, date, dir_save)
             
             for name in ['Calibrated', 'Cat', 'WCS', 'XYMag', 'time.npy']:

@@ -52,7 +52,7 @@ def collect_frames(files, multiproc):
     return Stack
 
 def trim_frames(frames, X, Y):
-    print(f'\n    Trim frames: {X, Y}')
+    print(f'Trim frames: {X, Y}')
     if type(frames)==list:
         for i in range(len(frames)):
             frames[i] = frames[i][Y[0]:Y[1], X[0]:X[1]]

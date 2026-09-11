@@ -134,7 +134,7 @@ def process(T, file, img_size_X, img_size_Y, k, Master, dir_cal, dir_wcs,
     if reduc:
         image_cb = runReduce(frame, k, Master, dir_cal)
         save_frame(image_cb, name=name, dir_save=dir_cal, hdr=hdr)
-
+    '''
     g = [0, 1700, 1000, 3096, 2396, 4096]
     parts = [[0, 0], [1, 0], [2, 0], [0, 1], [1, 1], [2, 1], [0, 2], [1, 2], [2, 2]]
     Y_grid = [g[:2], g[2:4], g[4:]]
@@ -163,7 +163,7 @@ def process(T, file, img_size_X, img_size_Y, k, Master, dir_cal, dir_wcs,
             os.remove(image_photom)
     return T
 
-'''
+    '''
     #######################################
     if astrometry:
         image_astrom = dir_cal + name + '.fits'        
@@ -179,9 +179,6 @@ def process(T, file, img_size_X, img_size_Y, k, Master, dir_cal, dir_wcs,
         os.remove(image_astrom)
         os.remove(image_photom)
     return T
-'''
-
-
 
 
 #  config_name = config_name_RI
@@ -235,7 +232,7 @@ def run(config_name, target, catalog_path, dir_data, dir_save, dir_configs,
     t0 = time()
     n = os.cpu_count()
     N = len(image_files)//n + 1
-    print(s + 'subtract')
+    print(s + 'substract')
     
     Params_dict = {
         '-D': dir_wcs,
