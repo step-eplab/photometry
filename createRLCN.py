@@ -27,6 +27,7 @@ def run(config_name, date, dir_save):
         configs = json.load(file)
     N_col = configs['PHOT_APERTURES'].count(',') + 1
     columns = np.concatenate(([''], '_' + np.arange(1, N_col).astype(str)))
+    columns = ['_1']
     #############################
     date = date.replace('.','')
     
@@ -80,7 +81,11 @@ def run(config_name, date, dir_save):
     for i, col in enumerate(columns):
         name_df = f'{dir_lc}LC_{date}{col}.csv'
         print(f'SAVE DataFrame {name_df}')
-        DFs[i].to_csv(name_df, index_label='g_inx')
+        
+        D = DFs[i]
+        D = D.replace(99, np.nan)
+        D = D.loc[(len(D.columns[1:]) - D.isna().sum(axis=1))>100]
+        D.to_csv(name_df, index_label='g_inx')
 
 
 

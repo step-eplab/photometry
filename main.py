@@ -86,7 +86,7 @@ def main():
                        img_size_X, img_size_Y, N_images=N_images)
             '''
             run_createRLC(config_name_RI, date, dir_save)
-
+            
             for name in ['Calibrated', 'WCS', 'XYMag', 'time.npy']:
                 subprocess.run(f'rm -r {dir_res}{date}/{name}', shell=True)
 
