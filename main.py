@@ -77,6 +77,7 @@ def main():
         if len(image_files) > min_targets:
             dir_save = dir_res + date + '/'
         
+            '''
             run_createCF(config_name_CF, dir_data, dir_save, 
                          img_size_X, img_size_Y)
 
@@ -86,9 +87,9 @@ def main():
             '''
             run_createRLC(config_name_RI, date, dir_save)
 
-            for name in ['Calibrated', 'Cat', 'WCS', 'XYMag', 'time.npy']:
+            for name in ['Calibrated', 'WCS', 'XYMag', 'time.npy']:
                 subprocess.run(f'rm -r {dir_res}{date}/{name}', shell=True)
-            '''
+
         else:
             print(f'There are no {target} images')
             print(f'path: {dir_data}')
