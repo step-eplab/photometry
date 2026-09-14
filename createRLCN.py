@@ -14,9 +14,14 @@ import pandas as pd
 
 import astropy.io.ascii as asc
 
-# config_name = config_name_RI
-# date = 'xxxx'
-# dir_save = '/home/fedora/astronomy/STEP/main/data/field5_11September/'
+
+'''
+
+config_name = config_name_RI
+date = '24.12.20'
+dir_save = f'/home/fedora/Downloads/{date}/'
+
+'''
 def run(config_name, date, dir_save):    
     with open(config_name, 'r') as file:
         configs = json.load(file)
@@ -61,7 +66,7 @@ def run(config_name, date, dir_save):
         cat_name = dir_cat + name + '.cat'
         data = asc.read(cat_name).to_pandas(index='NUMBER')
         
-        data = data.sort_values(['VECTOR_ASSOC', 'MAG_APER'], ignore_index=True)
+        data = data.sort_values(['VECTOR_ASSOC', 'MAG_APER_1'], ignore_index=True)
         data = data.drop_duplicates(subset='VECTOR_ASSOC')
         G_inx = data['VECTOR_ASSOC'].values
         

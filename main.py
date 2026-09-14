@@ -43,7 +43,7 @@ def main():
     if len(sys.argv)>1:
         config_name_paths = sys.argv[1]
     else:
-        config_name_paths = '../paths_F5.json'
+        config_name_paths = '../paths_F4.json'
     
     with open(config_name_paths, 'r') as file:
         configs_paths = json.load(file)
